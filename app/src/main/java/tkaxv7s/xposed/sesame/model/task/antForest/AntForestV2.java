@@ -281,8 +281,7 @@ public class AntForestV2 extends ModelTask {
             if (!TaskCommon.IS_ENERGY_TIME && selfHomeObject != null) {
                 String whackMoleStatus = selfHomeObject.optString("whackMoleStatus");
                 if ("CAN_PLAY".equals(whackMoleStatus) || "CAN_INITIATIVE_PLAY".equals(whackMoleStatus) || "NEED_MORE_FRIENDS".equals(whackMoleStatus)) {
-                    // whackMole();
-                    break;
+                    whackMole();
                 }
                 boolean hasMore = false;
                 do {
@@ -609,8 +608,7 @@ public class AntForestV2 extends ModelTask {
                 String nextAction = selfHomeObject.optString("nextAction");
                 if ("WhackMole".equalsIgnoreCase(nextAction)) {
                     Log.record("检测到6秒拼手速强制弹窗，先执行拼手速");
-                    // whackMole();
-                    break;
+                    whackMole();
                 }
                 return collectUserEnergy(UserIdMap.getCurrentUid(), selfHomeObject);
             }
@@ -1156,38 +1154,50 @@ public class AntForestV2 extends ModelTask {
     }
 
     /* 6秒拼手速 打地鼠 */
+    // private void whackMole() {
+    //     try {
+    //         long start = System.currentTimeMillis();
+    //         JSONObject jo = new JSONObject(AntForestRpcCall.startWhackMole());
+    //         if (jo.optBoolean("success")) {
+    //             JSONArray moleInfo = jo.optJSONArray("moleInfo");
+    //             if (moleInfo != null) {
+    //                 List<String> whackMoleIdList = new ArrayList<>();
+    //                 for (int i = 0; i < moleInfo.length(); i++) {
+    //                     JSONObject mole = moleInfo.getJSONObject(i);
+    //                     long moleId = mole.getLong("id");
+    //                     whackMoleIdList.add(String.valueOf(moleId));
+    //                 }
+    //                 if (!whackMoleIdList.isEmpty()) {
+    //                     String token = jo.getString("token");
+    //                     long end = System.currentTimeMillis();
+    //                     TimeUtil.sleep(6000 - end + start);
+    //                     jo = new JSONObject(AntForestRpcCall.settlementWhackMole(token, whackMoleIdList));
+    //                     if ("SUCCESS".equals(jo.getString("resultCode"))) {
+    //                         int totalEnergy = jo.getInt("totalEnergy");
+    //                         Log.forest("森林能量⚡[获得:6秒拼手速能量" + totalEnergy + "g]");
+    //                     }
+    //                 }
+    //             }
+    //         } else {
+    //             Log.i(TAG, jo.getJSONObject("data").toString());
+    //         }
+    //     } catch (Throwable t) {
+    //         Log.i(TAG, "whackMole err:");
+    //         Log.printStackTrace(TAG, t);
+    //     }
+    // }
+
+
+
     private void whackMole() {
         try {
-            long start = System.currentTimeMillis();
-            JSONObject jo = new JSONObject(AntForestRpcCall.startWhackMole());
-            if (jo.optBoolean("success")) {
-                JSONArray moleInfo = jo.optJSONArray("moleInfo");
-                if (moleInfo != null) {
-                    List<String> whackMoleIdList = new ArrayList<>();
-                    for (int i = 0; i < moleInfo.length(); i++) {
-                        JSONObject mole = moleInfo.getJSONObject(i);
-                        long moleId = mole.getLong("id");
-                        whackMoleIdList.add(String.valueOf(moleId));
-                    }
-                    if (!whackMoleIdList.isEmpty()) {
-                        String token = jo.getString("token");
-                        long end = System.currentTimeMillis();
-                        TimeUtil.sleep(6000 - end + start);
-                        jo = new JSONObject(AntForestRpcCall.settlementWhackMole(token, whackMoleIdList));
-                        if ("SUCCESS".equals(jo.getString("resultCode"))) {
-                            int totalEnergy = jo.getInt("totalEnergy");
-                            Log.forest("森林能量⚡[获得:6秒拼手速能量" + totalEnergy + "g]");
-                        }
-                    }
-                }
-            } else {
-                Log.i(TAG, jo.getJSONObject("data").toString());
-            }
+            // Do nothing
         } catch (Throwable t) {
             Log.i(TAG, "whackMole err:");
             Log.printStackTrace(TAG, t);
         }
     }
+    
 
     private Boolean closeWhackMole() {
         try {
