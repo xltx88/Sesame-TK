@@ -282,6 +282,7 @@ public class AntForestV2 extends ModelTask {
                 String whackMoleStatus = selfHomeObject.optString("whackMoleStatus");
                 if ("CAN_PLAY".equals(whackMoleStatus) || "CAN_INITIATIVE_PLAY".equals(whackMoleStatus) || "NEED_MORE_FRIENDS".equals(whackMoleStatus)) {
                     // whackMole();
+                    break
                 }
                 boolean hasMore = false;
                 do {
@@ -609,6 +610,7 @@ public class AntForestV2 extends ModelTask {
                 if ("WhackMole".equalsIgnoreCase(nextAction)) {
                     Log.record("检测到6秒拼手速强制弹窗，先执行拼手速");
                     // whackMole();
+                    break
                 }
                 return collectUserEnergy(UserIdMap.getCurrentUid(), selfHomeObject);
             }
